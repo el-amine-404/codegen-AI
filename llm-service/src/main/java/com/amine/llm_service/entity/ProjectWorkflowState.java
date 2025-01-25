@@ -15,10 +15,20 @@ public class ProjectWorkflowState {
 
     private String userDescription;
     private List<UseCase> suggestedUseCases;
-    private List<UseCase> selectedUseCases;
+    private String selectedUseCases;
     private String architecture;
-    private List<String> languagesAndTools;
+    private String languagesAndTools;
+    private List<FilePath> filePaths;
 
 
-
+    @Override
+    public String toString() {
+        return "ProjectWorkflowState{" +
+                "userDescription='" + userDescription + '\'' +
+                ", suggestedUseCases=" + suggestedUseCases +
+                ", selectedUseCases=" + selectedUseCases +
+                ", architecture='" + architecture + '\'' +
+                ", languagesAndTools=" + languagesAndTools +
+                '}';
+    }
 }
