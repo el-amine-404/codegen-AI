@@ -9,6 +9,11 @@ spring:
     gateway:
       routes:
         - id: llm-route
-          uri: http://localhost:8081
+          uri: lb://LLM-SERVICE
           predicates:
             - Path=/llm/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
