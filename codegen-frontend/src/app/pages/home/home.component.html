@@ -1,0 +1,162 @@
+<div class="container mt-5">
+  <!-- STEP - 1 - DESCRIBE THE PROJECT -->
+  <div class="mt-5">
+    <h2 class="mb-4">1 - Project Description</h2>
+    <form [formGroup]="descriptionForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="projectDescription" class="form-label"
+          >Describe your project:</label
+        >
+        <textarea
+          class="form-control"
+          id="projectDescription"
+          formControlName="userDescription"
+          rows="4"
+          placeholder="Enter your project description..."
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Get Use Cases</button>
+    </form>
+  </div>
+
+  <!-- STEP - 2 - SELECTE THE USE CASES -->
+
+  @if (suggestedUseCases.length > 0) {
+  <div class="mt-5">
+    <h2 class="mb-4">2 - Use Cases</h2>
+    <form [formGroup]="useCaseForm" (ngSubmit)="submitSelectedUseCases()">
+      @for (useCase of suggestedUseCases; track $index) {
+      <div class="form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="useCase{{ $index }}"
+          (change)="onCheckboxChange($event, useCase)"
+        />
+        <label class="form-check-label" for="useCase{{ $index }}">
+          <strong>{{ useCase.name }}</strong
+          >: {{ useCase.description }}
+        </label>
+      </div>
+      }
+
+      <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+  </div>
+  }
+
+  <!-- STEP - 3 - SELECTE THE ARCHITECTURE -->
+
+  @if (selectedUseCases.length > 0) {
+  <div class="mt-5">
+    <h2 class="mb-4">3 - Select Architecture</h2>
+    <form [formGroup]="architectureForm" (ngSubmit)="onArchitectureSubmit()">
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="microservices"
+          value="microservices"
+          formControlName="selectedArchitecture"
+        />
+        <label class="form-check-label" for="microservices">
+          <strong>Microservices</strong>
+        </label>
+        <p class="text-muted">
+          A microservices architecture structures an application as a collection
+          of small, independent services. Each service runs in its own process
+          and communicates with other services via APIs. This approach is ideal
+          for large, complex applications that require scalability and
+          flexibility.
+        </p>
+      </div>
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="monolith"
+          value="monolith"
+          formControlName="selectedArchitecture"
+        />
+        <label class="form-check-label" for="monolith">
+          <strong>Monolith</strong>
+        </label>
+        <p class="text-muted">
+          A monolithic architecture structures an application as a single,
+          unified unit. All components (e.g., UI, business logic, database
+          access) are tightly coupled and run in a single process. This approach
+          is ideal for small to medium-sized applications that require
+          simplicity and ease of deployment.
+        </p>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Architecture</button>
+    </form>
+  </div>
+  }
+
+  <!-- STEP - 4 - SELECT TECHNOLOGIES -->
+
+  @if (selectedUseCases.length > 0) {
+  <!-- Technology and Tool Selection -->
+  <div class="mt-5">
+    <h2 class="mb-4">4 - Select Technologies and Tools:</h2>
+    <form [formGroup]="technologyForm" (ngSubmit)="submitTechnologies()">
+      <!-- Backend -->
+      <div class="mb-3">
+        <label class="form-label">Backend:</label>
+        <select class="form-select" formControlName="backend">
+          <option value="">Select a backend technology</option>
+          @for (back of technologiesAndTools.backend; track $index) {
+          <option [value]="back.name">
+            {{ back.name }} - {{ back.description }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <!-- Frontend -->
+      <div class="mb-3">
+        <label class="form-label">Frontend:</label>
+        <select class="form-select" formControlName="frontend">
+          <option value="">Select a frontend technology</option>
+
+          @for (front of technologiesAndTools.frontend; track $index) {
+          <option [value]="front.name">
+            {{ front.name }} - {{ front.description }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <!-- Tools -->
+      <div class="mb-3">
+        <label class="form-label">Tools:</label>
+        <select class="form-select" formControlName="tools">
+          <option value="">Select a tool</option>
+          @for (tool of technologiesAndTools.tools; track $index) {
+          <option [value]="tool.name">
+            {{ tool.name }} - {{ tool.description }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <!-- Final Submission -->
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="submitTechnologies()"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+  } @if (selectedUseCases.length > 0) {
+  <div class="mt-5">
+    <h2 class="mb-4">5 - Download Project Files</h2>
+    <button (click)="downloadZip()" class="mb-4 btn btn-primary">
+      Download ZIP
+    </button>
+  </div>
+  }
+</div>
